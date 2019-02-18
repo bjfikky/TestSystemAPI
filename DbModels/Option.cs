@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace TestSystemASP.DbModels
 {
     public class Option
@@ -12,5 +14,7 @@ namespace TestSystemASP.DbModels
         public int QuestionId { get; set; }
 
         public Question Question { get; set; }
+
+        public ICollection<Answer> Answers { get; set; }
     }
 }
