@@ -1,0 +1,31 @@
+﻿@model List<TestSystemASP.DbModels.Question>
+
+@{
+    ViewData["Title"] = "List of Questions";
+}
+
+<h2>@ViewData["title"]</h2>
+
+<div>
+    <ol>
+        @foreach(var question in Model)
+        {
+            <div class="question">
+                <li>@question.QuestionText</li>
+
+                <ul>
+                    @foreach (var option in question.Options)
+                    {
+                        <li>
+                            @option.Text @if(option.IsCorrect) {
+                            <span> &#10004;</span>
+                            }  
+
+                        </li>
+                    }
+                    
+                </ul>
+            </div>
+        }
+    </ol>
+</div>

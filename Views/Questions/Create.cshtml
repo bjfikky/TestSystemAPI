@@ -1,0 +1,49 @@
+﻿@model QuestionOptionViewModel
+@{
+    ViewData["Title"] = "Add a Question";
+}
+
+<h2>@ViewData["title"]</h2>
+
+@{
+
+    if (TempData["success-msg"] is string msg) {
+        <div class="alert alert-success">
+            <strong>Success!</strong> @msg.
+        </div>
+    }
+}
+
+
+
+<div class="question">
+    <form asp-controller="Questions" asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="QuestionViewModel.QuestionText"></label>
+            <textarea class="form-control" asp-for="QuestionViewModel.QuestionText"></textarea>
+            <span class="text-danger" asp-validation-for="QuestionViewModel.QuestionText"></span>
+        </div>
+
+        <hr/>
+
+        <div class="options">
+            <h6>Options</h6>
+
+            @for(var i = 0; i < 4; i++) {
+
+                <div class="form-group">
+                    <textarea class="form-control" asp-for="OptionViewModel[i].OptionText"></textarea>
+                    <input type="checkbox" asp-for="OptionViewModel[i].IsCorrect" /> Mark as right option
+                    <br/>
+                    <span class="text-danger" asp-validation-for="OptionViewModel[i].OptionText"></span>
+                </div>
+
+            }
+
+        </div>
+        
+        <div>
+            <input class="btn btn-primary" type="submit" value="Save Question"/>
+        </div>
+    </form>
+</div>
