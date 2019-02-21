@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace TestSystemASP.DbModels
 {
@@ -9,6 +10,7 @@ namespace TestSystemASP.DbModels
 
         public string Text { get; set; }
 
+        [JsonIgnore]
         public bool IsCorrect { get; set; }
 
         public int QuestionId { get; set; }

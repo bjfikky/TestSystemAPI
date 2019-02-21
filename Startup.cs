@@ -43,7 +43,7 @@ namespace TestSystemASP
             services.AddCors(options =>
             {
                 options.AddPolicy("vue",
-                    policy => policy.WithOrigins("http://localhost:8080"));
+                    policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
