@@ -25,9 +25,26 @@ namespace TestSystemASP.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
             
-            // TODO: Check if the user has already answered i.e - edit and answer rather than save a new one
+            // Get question related to answer id
+
+            var option = _context.Options.Find(answer.OptionId);
             
-            _context.Answers.Add(answer);
+            // TODO: Check if the user has already answered i.e - edit and answer rather than save a new one
+
+            var previousAnswer = _context.Answers
+                .FirstOrDefault(a => a.Email == answer.Email && a.Option.QuestionId == option.QuestionId);
+
+            if (previousAnswer == null)
+            {
+                _context.Answers.Add(answer);
+            }
+            else
+            {
+                previousAnswer.Email = answer.Email;
+                previousAnswer.OptionId = answer.OptionId;
+            }
+            
+            
 
             _context.SaveChanges();
 
