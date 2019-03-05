@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace TestSystemASP.DbModels
 {
@@ -10,6 +11,7 @@ namespace TestSystemASP.DbModels
         
         public int OptionId { get; set; }
 
+        [JsonIgnore]
         public Option Option { get; set; }
     }
 }

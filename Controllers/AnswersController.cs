@@ -26,11 +26,9 @@ namespace TestSystemASP.Controllers
             if (!ModelState.IsValid) return BadRequest();
             
             // Get question related to answer id
-
             var option = _context.Options.Find(answer.OptionId);
             
-            // TODO: Check if the user has already answered i.e - edit and answer rather than save a new one
-
+            // Check if the user has already answered i.e - edit and answer rather than save a new one
             var previousAnswer = _context.Answers
                 .FirstOrDefault(a => a.Email == answer.Email && a.Option.QuestionId == option.QuestionId);
 
@@ -42,22 +40,31 @@ namespace TestSystemASP.Controllers
             {
                 previousAnswer.Email = answer.Email;
                 previousAnswer.OptionId = answer.OptionId;
-            }
-            
-            
+            }            
 
             _context.SaveChanges();
 
             return Ok("Added");
         }
 
+        
         [HttpGet]
         [Route("/api/answers/{email}")]
         public IActionResult GetAnswers(string email)
         {
-            var answers = _context.Answers.Where(a => a.Email == email).ToList();
+            var answers = _context.Answers.Where(a => a.Email == email).Include(a => a.Option.Question).ToList();
             
             return Json(answers);
+        }
+
+        
+        [HttpGet]
+        [Route("/api/score/{email}")]
+        public IActionResult GetScore(string email)
+        {
+            var rightAnswers = _context.Answers.Count(r => r.Option.IsCorrect);
+            
+            return Json(rightAnswers);
         }
         
     }
